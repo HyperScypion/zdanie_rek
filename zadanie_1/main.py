@@ -7,7 +7,7 @@ df = pd.read_csv("test.csv")
 
 # Wypisanie liczby wszystkich osób urodzonych po 1999-12-31
 print(
-    f"Ilosc osob urodzonych po 1999-12-31: {df.data_urodzenia[df.data_urodzenia > '31.12.1999'].count()}"
+    f'Ilosc osob urodzonych po 1999-12-31: {df.data_urodzenia[pd.to_datetime(df.data_urodzenia) > "1999-12-31"].count()}'
 )
 
 # Wypisanie wszystkich imion żeńskich
