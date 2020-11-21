@@ -46,8 +46,9 @@ def get_red(image):
 
 @db_session
 def get_max_red():
-    data = select((img, max(img.red)) for img in ImageDB)
-    print(data.first()[0][0])
+    _max = max(img.red for img in ImageDB)
+    data = ImageDB.select(lambda img: img.red == _max)
+    return data[0]
 
 
 def enumerate_tqdm(y):
@@ -99,6 +100,8 @@ if __name__ == "__main__":
             f"https://www.flickr.com/services/rest/?method=flickr.photos.getRecent",
             params=params,
         ).content
-        print(photos)
 
-    get_max_red()
+    data = get_max_red()
+    cv2.imshow("img", data.img)
+    if cv2.waitKey(0) & 0xFF == ord("q"):
+        cv2.destroyAllWindows()
